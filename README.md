@@ -34,20 +34,15 @@ A complete RTL-to-verification project implementing a parameterizable synchronou
 
 ```
 .
-├── fifo_sync.sv          # RTL — DUT
-├── fifo_if.sv            # Interface + clocking blocks + SVA assertions
-├── fifo_pkg.sv           # Package — imports all UVM classes
-├── fifo_top.sv           # Testbench top module
-│
-├── fifo_transaction.sv   # UVM sequence item
-├── fifo_sequence.sv      # Sequences (4 test modes)
-├── fifo_driver.sv        # UVM driver
-├── fifo_monitor.sv       # UVM monitor (prev-cycle latch)
-├── fifo_scoreboard.sv    # Self-checking scoreboard (golden model)
-├── fifo_coverage.sv      # Functional coverage collector
-├── fifo_agent.sv         # UVM agent
-├── fifo_env.sv           # UVM environment
-└── fifo_base_test.sv     # UVM test (5-stage sequence)
+├── design/
+│   └── fifo_sync.sv
+├── tb/
+│   ├── fifo_if.sv
+│   ├── fifo_pkg.sv
+│   ├── fifo_top.sv
+│   └── ...
+├── fifo_sync_spec.pdf
+└── README.md
 ```
 
 ---
