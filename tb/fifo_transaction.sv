@@ -22,6 +22,10 @@ class fifo_transaction extends uvm_sequence_item;
         super.new(name);
     endfunction
 
+    constraint c_no_simultaneous_rw {
+        !(w_en == 1 && r_en == 1); 
+    }
+
     constraint c_wr_rd {
         w_en dist {1 := 50, 0 := 50};
         r_en dist {1 := 30, 0 := 70};

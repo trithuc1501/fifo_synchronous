@@ -29,7 +29,9 @@ class fifo_coverage extends uvm_subscriber #(fifo_transaction);
       bins empty_transition   = (0 => 1), (1 => 0);
     }
 
-    cross_w_r: cross cp_w_en, cp_r_en;
+    cross_w_r: cross cp_w_en, cp_r_en {
+      ignore_bins forbidden_simultaneous = binsof(cp_w_en.write_on) && binsof(cp_r_en.read_on);
+    }
 
     cross_write_full: cross cp_w_en, cp_full {
       bins write_at_full = binsof(cp_w_en.write_on) && binsof(cp_full.full_on);

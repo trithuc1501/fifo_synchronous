@@ -21,7 +21,6 @@ class fifo_base_test extends uvm_test;
 
   virtual task run_phase(uvm_phase phase);
     fifo_sequence seq;
-    
 
     phase.raise_objection(this);
 
