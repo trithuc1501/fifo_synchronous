@@ -165,25 +165,55 @@ Coverage percentage is reported at end of simulation via `report_phase`.
 
 ## How to Run
 
-The project targets any UVM-compatible simulator (QuestaSim, VCS, Xcelium, etc.).
+This project can be run entirely in the browser via **[EDA Playground](https://www.edaplayground.com)** — no local installation required.
 
-**QuestaSim example:**
+### Step-by-step
 
-```bash
-vlog -sv +incdir+. fifo_top.sv
-vsim -c fifo_top -do "run -all; quit"
+**1. Create a new playground**
+
+Go to [edaplayground.com](https://www.edaplayground.com) and log in (free account required). Click **New Playground**.
+
+**2. Configure the simulator**
+
+In the left panel, under **Tools & Simulators**, select:
+- **Simulator:** `Aldec Riviera-PRO` or `Cadence Xcelium` (both support UVM)
+- **Language:** `SystemVerilog/Verilog`
+- **UVM:** tick the **UVM** checkbox (adds `+incdir+$UVM_HOME/src $UVM_HOME/src/uvm_pkg.sv` automatically)
+
+**3. Upload the files**
+
+Add all `.sv` files to the playground. In the **testbench** tab paste or upload `fifo_top.sv`. In the **design** tab paste or upload `fifo_sync.sv`. All remaining files (`fifo_if.sv`, `fifo_pkg.sv`, `fifo_transaction.sv`, `fifo_sequence.sv`, `fifo_driver.sv`, `fifo_monitor.sv`, `fifo_scoreboard.sv`, `fifo_agent.sv`, `fifo_coverage.sv`, `fifo_env.sv`, `fifo_base_test.sv`) can be added as additional files via **+ Add file**.
+
+**4. Set the top-level and compile options**
+
+In the **Testbench** compile options box, add:
+
+```
++incdir+. +UVM_TESTNAME=fifo_base_test
 ```
 
-**VCS example:**
+Set **Top entity** to:
 
-```bash
-vcs -sverilog -ntb_opts uvm-1.2 +incdir+. fifo_top.sv -o simv
-./simv +UVM_TESTNAME=fifo_base_test
+```
+fifo_top
 ```
 
-**Dump waveform** — VCD is generated automatically:
+**5. Run**
 
-```bash
-# dump.vcd is created by $dumpfile/$dumpvars in fifo_top.sv
-gtkwave dump.vcd
+Click **▶ Run**. The log window will show UVM phase output, scoreboard PASS/FAIL results, and the final coverage percentage from `report_phase`.
+
+**6. View waveform**
+
+`fifo_top.sv` calls `$dumpfile` / `$dumpvars` automatically. After simulation completes, click **Open EPWave** to view the generated waveform in the browser.
+
+### Expected output
+
+```
+UVM_INFO fifo_base_test.sv  : --- STAGE 1: RUNNING READ_EMPTY ---
+UVM_INFO fifo_base_test.sv  : --- STAGE 2: RUNNING WRITE_FULL ---
+UVM_INFO fifo_base_test.sv  : --- STAGE 3: RUNNING DATA_STRESS ---
+UVM_INFO fifo_base_test.sv  : --- STAGE 4: RUNNING RANDOM ---
+UVM_INFO fifo_base_test.sv  : --- STAGE 5: FINAL CLEANUP (READ_EMPTY) ---
+UVM_INFO fifo_scoreboard.sv : FINAL REPORT: Matches: X, Errors: 0
+UVM_INFO fifo_coverage.sv   : FINAL FUNCTIONAL COVERAGE: 100.00 %
 ```
