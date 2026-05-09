@@ -25,8 +25,8 @@ class fifo_sequence extends uvm_sequence #(fifo_transaction);
             end
 
             WRITE_FULL: begin
-                `uvm_info("SEQ", "Starting WRITE_FULL mode (9 writes)", UVM_LOW)
-                repeat(count) begin
+                `uvm_info("SEQ", $sformatf("Starting WRITE_FULL mode (%0d writes)", Depth+1), UVM_LOW)
+                repeat(Depth + 1) begin
                     req = fifo_transaction::type_id::create("req");
                     start_item(req);
                     if (!req.randomize() with {w_en == 1; r_en == 0;}) begin
@@ -37,8 +37,8 @@ class fifo_sequence extends uvm_sequence #(fifo_transaction);
             end
 
             READ_EMPTY: begin
-                `uvm_info("SEQ", "Starting READ_EMPTY mode (9 reads)", UVM_LOW)
-                repeat(count) begin
+                `uvm_info("SEQ", $sformatf("Starting READ_EMPTY mode (%0d reads)", Depth+1), UVM_LOW)
+                repeat(Depth + 1) begin
                     req = fifo_transaction::type_id::create("req");
                     start_item(req);
                     if (!req.randomize() with {w_en == 0; r_en == 1;}) begin
