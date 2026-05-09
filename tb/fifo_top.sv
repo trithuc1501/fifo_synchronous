@@ -26,9 +26,11 @@ module fifo_top;
     );
 
     initial begin
+        
         uvm_config_db#(virtual fifo_if)::set(null, "*", "vif", p_if);
 
-        uvm_top.finish_on_completion = 1;
+        uvm_top.finish_on_completion = 1;   
+        uvm_top.set_timeout(1ms, 1);
 
         run_test("fifo_base_test");
     end
