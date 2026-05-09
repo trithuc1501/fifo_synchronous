@@ -3,7 +3,7 @@ class fifo_base_test extends uvm_test;
 
   fifo_env env;
 
-  // 2. Constructor
+  // Constructor
   function new(string name = "fifo_base_test", uvm_component parent);
     super.new(name, parent);
   endfunction
@@ -21,28 +21,33 @@ class fifo_base_test extends uvm_test;
 
   virtual task run_phase(uvm_phase phase);
     fifo_sequence seq;
-    seq = fifo_sequence::type_id::create("seq");
+    
 
     phase.raise_objection(this);
 
     `uvm_info("TEST", "--- STAGE 1: RUNNING READ_EMPTY ---", UVM_LOW)
+    seq = fifo_sequence::type_id::create("seq");
     seq.mode = READ_EMPTY;
     seq.start(env.agt.sqr);
 
     `uvm_info("TEST", "--- STAGE 2: RUNNING WRITE_FULL ---", UVM_LOW)
+    seq = fifo_sequence::type_id::create("seq");
     seq.mode = WRITE_FULL;
     seq.start(env.agt.sqr);
 
     `uvm_info("TEST", "--- STAGE 3: RUNNING DATA_STRESS ---", UVM_LOW)
+    seq = fifo_sequence::type_id::create("seq");
     seq.mode = DATA_STRESS;
     seq.start(env.agt.sqr);
 
     `uvm_info("TEST", "--- STAGE 4: RUNNING RANDOM ---", UVM_LOW)
+    seq = fifo_sequence::type_id::create("seq");
     seq.mode = RANDOM;
     seq.count = 200;
     seq.start(env.agt.sqr);
 
     `uvm_info("TEST", "--- STAGE 5: FINAL CLEANUP (READ_EMPTY) ---", UVM_LOW)
+    seq = fifo_sequence::type_id::create("seq");
     seq.mode = READ_EMPTY;
     seq.start(env.agt.sqr);
 

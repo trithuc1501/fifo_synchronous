@@ -3,8 +3,8 @@ module fifo_sync #(
     parameter Width = 8
 )(
     input logic clk, rst_n, w_en, r_en,
-    input logic [7:0] w_data,
-    output logic [7:0] r_data,
+    input logic [Width - 1:0] w_data,
+    output logic [Width - 1:0] r_data,
     output logic full, empty
 );
     localparam Depth_log = $clog2(Depth);
